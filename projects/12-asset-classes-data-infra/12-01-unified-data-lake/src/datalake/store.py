@@ -10,12 +10,16 @@ from pathlib import Path
 import duckdb
 import pandas as pd
 
-from .schema import COLUMNS, DDL
+from .schema import COLUMNS, DDL, IST
 
 
 class DuckDBStore:
     def __init__(self, path: str | Path = ":memory:"):
         self.con = duckdb.connect(str(path))
+        # Pin the session zone so TIMESTAMPTZ reads render in IST on any host. DuckDB
+        # otherwise renders in the machine's local zone — IST locally but UTC on CI —
+        # which silently shifts the displayed offset (the stored instant is unchanged).
+        self.con.execute(f"SET TimeZone='{IST}'")
         self.con.execute(DDL)
 
     def upsert_candles(self, df: pd.DataFrame) -> int:
