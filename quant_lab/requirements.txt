@@ -1,0 +1,19 @@
+# Core (used across sections)
+requests
+pandas
+numpy
+scipy
+python-dotenv
+pyyaml             # parses the shared document cookie cutters (cookiecutters/*.yaml)
+
+# Stats / optimization / ML (per-section)
+statsmodels        # cointegration (ADF, Engle-Granger), time series
+cvxpy              # portfolio & execution convex optimization
+scikit-learn       # clustering, KNN, tree ensembles
+matplotlib         # plotting / surfaces
+
+# Optional (heavier; install when a project needs them)
+# upstox-python-sdk   # official SDK incl. MarketDataStreamerV3 (websocket depth feed)
+# torch               # deep learning (LSTM/Transformer, deep hedging)
+# transformers        # FinBERT / LLM sentiment
+# duckdb              # local analytical data lake (section 12)

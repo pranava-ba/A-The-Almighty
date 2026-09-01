@@ -1,0 +1,25 @@
+# Public runtime dependencies for the shipped code (the 72 subprojects + shared libs).
+#
+# The offline CI test suites need only: numpy, pandas, scipy, duckdb, pytest.
+# The free data adapters (yfinance, NSE bhavcopy) additionally use yfinance + requests,
+# imported lazily so the offline tests run without them.
+# Private adapters (Upstox, Bullseye-seed) are gitignored and not required here.
+
+# --- Core ---
+numpy
+pandas
+scipy
+
+# --- Data lake (section 12) ---
+duckdb
+requests
+yfinance
+
+# --- Tests ---
+pytest
+
+# --- Per-section (uncomment as those sections land) ---
+# statsmodels     # cointegration (ADF, Engle-Granger), time series
+# cvxpy           # convex portfolio & execution optimization
+# scikit-learn    # clustering, KNN, tree ensembles
+# matplotlib      # plotting / vol surfaces

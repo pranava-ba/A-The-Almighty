@@ -1,0 +1,98 @@
+# =====================================================================
+# What ships to GitHub is deliberately narrow:
+#   README.md, LICENSE, the 72 projects' CODE (projects/**/src,tests),
+#   the shared code they import (quant_lab/common + requirements.txt),
+#   and the ReadTheDocs source (quant_lab/docs/).
+# Everything listed below is kept LOCAL — planning, machinery, data,
+# secrets, and the source corpus (which is folded into the docs, not
+# shipped raw). Human-readable list: quant_lab/docs/published-manifest.md
+# =====================================================================
+
+# --- Secrets & tokens (NEVER commit) ---
+.env
+.env.*
+!.env.example
+*.token
+**/secrets.toml
+.streamlit/secrets.toml
+
+# --- ALL data: raw, sample, curated — none of it ships ---
+*.duckdb
+*.duckdb.wal
+*.parquet
+*.feather
+*.h5
+*.sqlite
+*.csv
+data/
+**/sample_data/
+
+# --- Planning / internal (kept local) ---
+/PORTFOLIO_SPEC.md
+/TODO.md
+/DATA_INVENTORY.md
+# legacy section-12 spec (planning); not one of the 72 projects
+/p01-market-data-foundation/
+quant_lab/docs/published-manifest.md
+
+# --- Source corpus: folded into the docs, never shipped raw ---
+/RESUME_CONCEPT_TABLES.md
+/RESUME_PROJECTS_DETAILED.md
+quant_resumes/
+
+# --- The brain / machinery: generates the output, but isn't shipped ---
+quant_lab/concepts.json
+quant_lab/scaffold.py
+quant_lab/coverage.py
+quant_lab/coverage.json
+quant_lab/coverage.md
+quant_lab/keyterms.json
+quant_lab/cookiecutters/
+quant_lab/graph.html
+quant_lab/graph_data.json
+quant_lab/GRAPH.md
+quant_lab/README.md
+projects/**/config.json
+# upstox client + paper bot: not needed public; re-add genuinely-shared public code (tearsheet/eval) as it's built
+quant_lab/common/
+# local reference material (awesome-quant catalog + curation, github-survey): machinery, never shipped
+quant_lab/reference/
+# section paper-bot invoker (dev utility)
+projects/**/run_papers.py
+# harvested-paper dump — its content folds into the reading docs
+projects/**/papers.md
+# Upstox data adapter: needs a token, kept private
+**/datalake/sources/upstox_source.py
+# reads the local (unshipped) Bullseye DB: private
+**/datalake/sources/bullseye_seed.py
+# its offline mapper test (also private)
+**/tests/test_upstox.py
+# its offline test (also private)
+**/tests/test_bullseye_seed.py
+
+# --- Docs build artifacts ---
+**/_build/
+**/.doctrees/
+site/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

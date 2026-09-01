@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: tests (offline)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test deps
+        run: pip install pandas numpy scipy duckdb pytest
+      - name: Run the offline test suites
+        run: python -m pytest projects -q
+        # Private adapters (Upstox, Bullseye-seed) and their tests are gitignored, so CI
+        # runs only the keyless, no-network public suites — all pass without a token.
+
+  docs:
+    name: docs build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install docs deps
+        run: pip install -r quant_lab/docs/requirements.txt
+      - name: Build the ReadTheDocs site (warnings are errors)
+        run: python -m sphinx -b html quant_lab/docs quant_lab/docs/_build/html -W --keep-going
